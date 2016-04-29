@@ -10,6 +10,9 @@
 		E59759151CD1FDCD001F2AC5 /* SwiftyEmojiKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = E59759141CD1FDCD001F2AC5 /* SwiftyEmojiKeyboard.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E597591C1CD1FDCD001F2AC5 /* SwiftyEmojiKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59759111CD1FDCD001F2AC5 /* SwiftyEmojiKeyboard.framework */; };
 		E59759211CD1FDCD001F2AC5 /* SwiftyEmojiKeyboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59759201CD1FDCD001F2AC5 /* SwiftyEmojiKeyboardTests.swift */; };
+		E59759911CD20210001F2AC5 /* EmojiKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59759901CD20210001F2AC5 /* EmojiKeyboard.swift */; };
+		E59759931CD32353001F2AC5 /* EmojiCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59759921CD32353001F2AC5 /* EmojiCollectionView.swift */; };
+		E59759951CD323F7001F2AC5 /* EmojiBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59759941CD323F7001F2AC5 /* EmojiBottomBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +32,9 @@
 		E597591B1CD1FDCD001F2AC5 /* SwiftyEmojiKeyboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyEmojiKeyboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E59759201CD1FDCD001F2AC5 /* SwiftyEmojiKeyboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyEmojiKeyboardTests.swift; sourceTree = "<group>"; };
 		E59759221CD1FDCD001F2AC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E59759901CD20210001F2AC5 /* EmojiKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiKeyboard.swift; sourceTree = "<group>"; };
+		E59759921CD32353001F2AC5 /* EmojiCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiCollectionView.swift; sourceTree = "<group>"; };
+		E59759941CD323F7001F2AC5 /* EmojiBottomBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiBottomBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +79,9 @@
 			children = (
 				E59759141CD1FDCD001F2AC5 /* SwiftyEmojiKeyboard.h */,
 				E59759161CD1FDCD001F2AC5 /* Info.plist */,
+				E59759901CD20210001F2AC5 /* EmojiKeyboard.swift */,
+				E59759921CD32353001F2AC5 /* EmojiCollectionView.swift */,
+				E59759941CD323F7001F2AC5 /* EmojiBottomBar.swift */,
 			);
 			path = SwiftyEmojiKeyboard;
 			sourceTree = "<group>";
@@ -194,6 +203,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E59759911CD20210001F2AC5 /* EmojiKeyboard.swift in Sources */,
+				E59759951CD323F7001F2AC5 /* EmojiBottomBar.swift in Sources */,
+				E59759931CD32353001F2AC5 /* EmojiCollectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +322,7 @@
 		E59759261CD1FDCD001F2AC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -320,12 +333,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.harrieschen.SwiftyEmojiKeyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		E59759271CD1FDCD001F2AC5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;

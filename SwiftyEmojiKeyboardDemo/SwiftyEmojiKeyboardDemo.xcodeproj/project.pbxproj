@@ -13,6 +13,8 @@
 		E59759741CD1FFC2001F2AC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E59759731CD1FFC2001F2AC5 /* Assets.xcassets */; };
 		E59759771CD1FFC2001F2AC5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59759751CD1FFC2001F2AC5 /* LaunchScreen.storyboard */; };
 		E59759821CD1FFC2001F2AC5 /* SwiftyEmojiKeyboardDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59759811CD1FFC2001F2AC5 /* SwiftyEmojiKeyboardDemoTests.swift */; };
+		E597598D1CD201E5001F2AC5 /* SwiftyEmojiKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E597598C1CD201E5001F2AC5 /* SwiftyEmojiKeyboard.framework */; };
+		E597598E1CD201E5001F2AC5 /* SwiftyEmojiKeyboard.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E597598C1CD201E5001F2AC5 /* SwiftyEmojiKeyboard.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +27,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		E597598F1CD201E6001F2AC5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E597598E1CD201E5001F2AC5 /* SwiftyEmojiKeyboard.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		E59759691CD1FFC2001F2AC5 /* SwiftyEmojiKeyboardDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyEmojiKeyboardDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E597596C1CD1FFC2001F2AC5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +52,7 @@
 		E597597D1CD1FFC2001F2AC5 /* SwiftyEmojiKeyboardDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyEmojiKeyboardDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E59759811CD1FFC2001F2AC5 /* SwiftyEmojiKeyboardDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyEmojiKeyboardDemoTests.swift; sourceTree = "<group>"; };
 		E59759831CD1FFC2001F2AC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E597598C1CD201E5001F2AC5 /* SwiftyEmojiKeyboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = SwiftyEmojiKeyboard.framework; path = "/Users/mrche/Library/Developer/Xcode/DerivedData/SwiftyEmojiKeyboard-fzupumjxgchfkqbespucvgajejsv/Build/Products/Debug-iphoneos/SwiftyEmojiKeyboard.framework"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E597598D1CD201E5001F2AC5 /* SwiftyEmojiKeyboard.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +77,7 @@
 		E59759601CD1FFC1001F2AC5 = {
 			isa = PBXGroup;
 			children = (
+				E597598C1CD201E5001F2AC5 /* SwiftyEmojiKeyboard.framework */,
 				E597596B1CD1FFC2001F2AC5 /* SwiftyEmojiKeyboardDemo */,
 				E59759801CD1FFC2001F2AC5 /* SwiftyEmojiKeyboardDemoTests */,
 				E597596A1CD1FFC2001F2AC5 /* Products */,
@@ -106,6 +125,7 @@
 				E59759651CD1FFC2001F2AC5 /* Sources */,
 				E59759661CD1FFC2001F2AC5 /* Frameworks */,
 				E59759671CD1FFC2001F2AC5 /* Resources */,
+				E597598F1CD201E6001F2AC5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -331,6 +351,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.harrieschen.SwiftyEmojiKeyboardDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -342,6 +363,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.harrieschen.SwiftyEmojiKeyboardDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -388,6 +410,7 @@
 				E59759881CD1FFC2001F2AC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E59759891CD1FFC2001F2AC5 /* Build configuration list for PBXNativeTarget "SwiftyEmojiKeyboardDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -396,6 +419,7 @@
 				E597598B1CD1FFC2001F2AC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
