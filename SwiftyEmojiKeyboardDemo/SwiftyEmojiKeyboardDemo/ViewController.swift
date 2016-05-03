@@ -25,9 +25,10 @@ class ViewController: UIViewController {
         textfiled.switchToDefaultKeyboard()
         textfiled.becomeFirstResponder()
     }
+    
     @IBOutlet weak var regular: UIButton!
     @IBAction func ddd(sender: AnyObject) {
-        let emoji = EmojiKeyboard()
+        let emoji = EmojiKeyboardView()
         
         textfiled.resignFirstResponder()
         textfiled.switchToEmojiKeyboard(emoji)
