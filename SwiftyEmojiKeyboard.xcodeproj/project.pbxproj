@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E52CCDB61CD8B7E000293F15 /* emoji_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E52CCDB41CD8B7E000293F15 /* emoji_delete@2x.png */; };
 		E52CCDB71CD8B7E000293F15 /* emoji_delete@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E52CCDB51CD8B7E000293F15 /* emoji_delete@3x.png */; };
+		E546B5C61CD9CDB800B6C81B /* EmojiRecent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E546B5C51CD9CDB800B6C81B /* EmojiRecent.swift */; };
 		E59759151CD1FDCD001F2AC5 /* SwiftyEmojiKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = E59759141CD1FDCD001F2AC5 /* SwiftyEmojiKeyboard.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E597591C1CD1FDCD001F2AC5 /* SwiftyEmojiKeyboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E59759111CD1FDCD001F2AC5 /* SwiftyEmojiKeyboard.framework */; };
 		E59759211CD1FDCD001F2AC5 /* SwiftyEmojiKeyboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59759201CD1FDCD001F2AC5 /* SwiftyEmojiKeyboardTests.swift */; };
@@ -237,6 +238,7 @@
 /* Begin PBXFileReference section */
 		E52CCDB41CD8B7E000293F15 /* emoji_delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emoji_delete@2x.png"; sourceTree = "<group>"; };
 		E52CCDB51CD8B7E000293F15 /* emoji_delete@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emoji_delete@3x.png"; sourceTree = "<group>"; };
+		E546B5C51CD9CDB800B6C81B /* EmojiRecent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiRecent.swift; sourceTree = "<group>"; };
 		E59759111CD1FDCD001F2AC5 /* SwiftyEmojiKeyboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyEmojiKeyboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E59759141CD1FDCD001F2AC5 /* SwiftyEmojiKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyEmojiKeyboard.h; sourceTree = "<group>"; };
 		E59759161CD1FDCD001F2AC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 				E59759901CD20210001F2AC5 /* EmojiKeyboardView.swift */,
 				E59759941CD323F7001F2AC5 /* EmojiBottomBar.swift */,
 				E59759A81CD84E69001F2AC5 /* EmojiCell.swift */,
+				E546B5C51CD9CDB800B6C81B /* EmojiRecent.swift */,
 			);
 			path = SwiftyEmojiKeyboard;
 			sourceTree = "<group>";
@@ -1056,6 +1059,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E59759911CD20210001F2AC5 /* EmojiKeyboardView.swift in Sources */,
+				E546B5C61CD9CDB800B6C81B /* EmojiRecent.swift in Sources */,
 				E59759951CD323F7001F2AC5 /* EmojiBottomBar.swift in Sources */,
 				E59759A91CD84E69001F2AC5 /* EmojiCell.swift in Sources */,
 			);

@@ -54,11 +54,11 @@ class EmojiBottomBar: UIView {
         
         for i in 0..<buttonArray.count {
             let button = buttonArray[i]
-            button.frame = CGRect(x: 100 * i, y: 0, width: 100, height: 35)
+            button.frame = CGRect(x: 80 * i, y: 0, width: 80, height: 35)
             button.tag = 8888 + i
             addSubview(button)
         }
-        buttonArray[0].selected = true
+        buttonArray[1].selected = true
     }
     
     func buttonTouchUpinside(sender: UIButton) {

@@ -24,11 +24,6 @@
                                     <action selector="ddd:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tiC-cE-fFD"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Puw-BV-XCA">
-                                <rect key="frame" x="84" y="135" width="97" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QGg-Cf-pGY">
                                 <rect key="frame" x="285" y="325" width="30" height="30"/>
                                 <state key="normal" title="常规"/>
@@ -36,11 +31,19 @@
                                     <action selector="tapRagular:" destination="BYZ-38-t0r" eventType="touchUpInside" id="X7k-Hc-Lb2"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Puw-BV-XCA">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Puw-BV-XCA" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="0XP-Oh-xVQ"/>
+                            <constraint firstAttribute="trailing" secondItem="Puw-BV-XCA" secondAttribute="trailing" id="8EA-lq-7lT"/>
                             <constraint firstItem="g06-pd-T7v" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Vte-Xu-frx"/>
                             <constraint firstItem="QGg-Cf-pGY" firstAttribute="centerX" secondItem="g06-pd-T7v" secondAttribute="centerX" id="aYX-Uf-1Vf"/>
+                            <constraint firstItem="Puw-BV-XCA" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="aa7-Ox-dbj"/>
                             <constraint firstItem="g06-pd-T7v" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="fL8-Kc-rY3"/>
                             <constraint firstItem="QGg-Cf-pGY" firstAttribute="top" secondItem="g06-pd-T7v" secondAttribute="bottom" constant="10" id="tHa-RI-X0t"/>
                         </constraints>

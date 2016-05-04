@@ -14,13 +14,15 @@ class LayoutManager {
     static var width: Int = 45
     static var pageCount: Int {
         get {
-           return maxRowCount() * 3 - 1
+           return maxRowCount * 3 - 1
         }
     }
     
-    static func maxRowCount() -> Int {
-        let width: Int = Int(UIScreen.mainScreen().bounds.size.width)
-        return width / 45
+    static var maxRowCount: Int {
+        get {
+            let width: Int = Int(UIScreen.mainScreen().bounds.size.width)
+            return width / 45
+        }
     }
 }
 
@@ -33,9 +35,9 @@ class EmojiCollectionViewLayout: UICollectionViewFlowLayout {
         
         let width: Int = Int(UIScreen.mainScreen().bounds.size.width)
         itemSize = CGSize(width: LayoutManager.width, height: 40)
-        let count: Int = width / 45
+        let count: Int = width / LayoutManager.width
 
-        let offset = (width - 45 * count) / 2
+        let offset = (width - LayoutManager.width * count) / 2
         
         sectionInset = UIEdgeInsetsMake(15, CGFloat(offset), 5, CGFloat(offset))
     }
@@ -58,23 +60,36 @@ public extension UITextView {
     
 }
 
+public protocol EmojiKeyboardViewDelegate: NSObjectProtocol {
+    
+    func emojiKeyboardView(emojiView: EmojiKeyboardView, didSelectEmoji emoji: String)
+    
+    func emojiKeyboatdViewDidSelectDelete(emojiView: EmojiKeyboardView)
+}
+
 public class EmojiKeyboardView: UIView {
 
     let cellIdentifer = "TBEmojiIdentifer"
-    let deleteCellIdentifer = "TBEmojiIdentiferDelete"
     
-    var dataSource = [[String: String]]()
+    public weak var delegate: EmojiKeyboardViewDelegate?
+    
+    var dataSource = [[[String: String]]]()
     
     static var bgColor: UIColor = UIColor(red: 231/255.0, green: 231/255.0, blue: 231/255.0, alpha: 1)
     
     var currentTabIndex: Int = 1 {
         didSet {
-            
+            if currentTabIndex == 0 {
+                dataSource[0] = RecentManager.instance.getEmojis()
+            }
+            collectionView.reloadData()
+            configPageControl()
         }
     }
     
     public override func layoutSubviews() {
         collectionView.reloadData()
+        configPageControl()
     }
     
     lazy var collectionView: UICollectionView = {
@@ -84,6 +99,12 @@ public class EmojiKeyboardView: UIView {
         collection.showsHorizontalScrollIndicator = false
         collection.backgroundColor = EmojiKeyboardView.bgColor
         return collection
+    }()
+    
+    lazy var pagecontrol: UIPageControl = {
+        let pagecontrol = UIPageControl()
+        pagecontrol.backgroundColor = EmojiKeyboardView.bgColor
+        return pagecontrol
     }()
     
     public init() {
@@ -101,7 +122,12 @@ public class EmojiKeyboardView: UIView {
         
         datasourceInit()
         collectionInit()
+        pagecontrolInit()
         bottomBarInit()
+    }
+    
+    func configPageControl() {
+        pagecontrol.numberOfPages = caculateNumberofSectionForTab(currentTabIndex)
     }
     
     func collectionInit() {
@@ -113,12 +139,19 @@ public class EmojiKeyboardView: UIView {
         addCollectionViewConstraint(collectionView)
     }
     
+    func pagecontrolInit() {
+        addSubview(pagecontrol)
+        addPageControlConstraint(pagecontrol)
+        configPageControl()
+    }
+    
     func datasourceInit() {
         let filePath = NSBundle(forClass: EmojiKeyboardView.self).pathForResource("default", ofType: "plist")
+        dataSource.append(RecentManager.instance.getEmojis())
         if let path = filePath {
             let defaultDict = NSDictionary(contentsOfFile: path)
             if let emoticons = defaultDict?.objectForKey("emoticons") as? [[String: String]] {
-                dataSource = emoticons
+                dataSource.append(emoticons)
             }
         }
     }
@@ -134,37 +167,40 @@ public class EmojiKeyboardView: UIView {
 extension EmojiKeyboardView {
     
     func caculateNumberofSectionForTab(tab: Int) -> Int {
-        if dataSource.count % LayoutManager.pageCount == 0 {
-            dataSource.count / LayoutManager.pageCount
+        if dataSource[currentTabIndex].count % LayoutManager.pageCount == 0 {
+            dataSource[currentTabIndex].count / LayoutManager.pageCount
         }
-        return dataSource.count / LayoutManager.pageCount + 1
+        return dataSource[currentTabIndex].count / LayoutManager.pageCount + 1
     }
     
     func dataSourceForPage(page: Int) -> [[String: String]] {
         let pageSize = LayoutManager.pageCount
         let startIndex = pageSize * page
-        if startIndex + pageSize < dataSource.count {
-            return Array(dataSource[startIndex..<startIndex + pageSize])
+        if dataSource[currentTabIndex].count == 0 {
+            return []
+        }
+        if startIndex + pageSize < dataSource[currentTabIndex].count {
+            return Array(dataSource[self.currentTabIndex][startIndex..<startIndex + pageSize])
         } else {
-            return Array(dataSource[startIndex..<dataSource.count - 1])
+            return Array(dataSource[self.currentTabIndex][startIndex..<dataSource[currentTabIndex].count - 1])
         }
     }
     
     func coverntIndexpathToIndex(indexPath: NSIndexPath) -> Int {
         let row = indexPath.row % 3 + 1
         let col = indexPath.row / 3 + 1
-        return (row - 1) * LayoutManager.maxRowCount() + col - 1
+        return (row - 1) * LayoutManager.maxRowCount + col - 1
     }
 }
 
 extension EmojiKeyboardView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return caculateNumberofSectionForTab(1)
+        return caculateNumberofSectionForTab(currentTabIndex)
     }
     
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (LayoutManager.maxRowCount() * 3)
+        return (LayoutManager.maxRowCount * 3)
     }
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -185,9 +221,14 @@ extension EmojiKeyboardView: UICollectionViewDelegate, UICollectionViewDataSourc
         let sections = dataSourceForPage(indexPath.section)
         let index = coverntIndexpathToIndex(indexPath)
         if index < sections.count {
-            print(sections[index])
+            RecentManager.instance.insert(sections[index])
+            if let delegate = delegate {
+                delegate.emojiKeyboardView(self, didSelectEmoji: sections[index]["chs"]!)
+            }
         } else if index == LayoutManager.pageCount  {
-            print("Click Delete")
+            if let delegate = delegate {
+                delegate.emojiKeyboatdViewDidSelectDelete(self)
+            }
         }
     }
 }
@@ -196,6 +237,13 @@ extension EmojiKeyboardView: EmojiBottomBarDelegate {
     
     func emojiBottomBar(bottomBar: EmojiBottomBar, didSelectAtIndex index: Int) {
         currentTabIndex = index
+    }
+}
+
+extension EmojiKeyboardView {
+    public func scrollViewDidScroll(scrollView: UIScrollView) {
+        let index: Int = Int(fabs(collectionView.contentOffset.x + 50) / scrollView.frame.size.width)
+        pagecontrol.currentPage = index
     }
 }
 
@@ -216,9 +264,20 @@ extension EmojiKeyboardView {
         let leftConstraint = NSLayoutConstraint(item: collection, attribute: .Left, relatedBy: .Equal, toItem: self, attribute: .Left, multiplier: 1, constant: 0)
         let topConstraint = NSLayoutConstraint(item: collection, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1, constant: 0)
         let rightConstraint = NSLayoutConstraint(item: collection, attribute: .Right, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1, constant: 0)
-        let heightConstraint = NSLayoutConstraint(item: collection, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 160)
+        let heightConstraint = NSLayoutConstraint(item: collection, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 161)
         
         self.addConstraints([leftConstraint, rightConstraint, topConstraint])
         collection.addConstraint(heightConstraint)
+    }
+    
+    func addPageControlConstraint(pagecontroler: UIPageControl) {
+        pagecontroler.translatesAutoresizingMaskIntoConstraints = false
+        let leftConstraint = NSLayoutConstraint(item: pagecontroler, attribute: .Left, relatedBy: .Equal, toItem: self, attribute: .Left, multiplier: 1, constant: 0)
+        let topConstraint = NSLayoutConstraint(item: pagecontroler, attribute: .Top, relatedBy: .Equal, toItem: collectionView, attribute: .Bottom, multiplier: 1, constant: 0)
+        let rightConstraint = NSLayoutConstraint(item: pagecontroler, attribute: .Right, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1, constant: 0)
+        let heightConstraint = NSLayoutConstraint(item: pagecontroler, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 20)
+        
+        self.addConstraints([leftConstraint, rightConstraint, topConstraint])
+        pagecontroler.addConstraint(heightConstraint)
     }
 }
