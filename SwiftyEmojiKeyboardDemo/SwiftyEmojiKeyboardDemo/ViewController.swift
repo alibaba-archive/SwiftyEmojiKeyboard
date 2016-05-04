@@ -56,5 +56,9 @@ extension ViewController: EmojiKeyboardViewDelegate {
     func emojiKeyboardView(emojiView: EmojiKeyboardView, didSelectEmoji emoji: String) {
         textfiled.text = textfiled.text?.stringByAppendingString(emoji)
     }
+    
+    func emojiKeyboatdViewDidSelectSend(emojiView: EmojiKeyboardView) {
+        
+    }
 }
 

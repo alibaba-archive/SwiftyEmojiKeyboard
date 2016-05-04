@@ -65,6 +65,16 @@ public protocol EmojiKeyboardViewDelegate: NSObjectProtocol {
     func emojiKeyboardView(emojiView: EmojiKeyboardView, didSelectEmoji emoji: String)
     
     func emojiKeyboatdViewDidSelectDelete(emojiView: EmojiKeyboardView)
+    
+    func emojiKeyboatdViewDidSelectSend(emojiView: EmojiKeyboardView)
+}
+
+public extension EmojiKeyboardViewDelegate {
+    func emojiKeyboardView(emojiView: EmojiKeyboardView, didSelectEmoji emoji: String) { }
+    
+    func emojiKeyboatdViewDidSelectDelete(emojiView: EmojiKeyboardView) { }
+    
+    func emojiKeyboatdViewDidSelectSend(emojiView: EmojiKeyboardView) { }
 }
 
 public class EmojiKeyboardView: UIView {
@@ -237,6 +247,10 @@ extension EmojiKeyboardView: EmojiBottomBarDelegate {
     
     func emojiBottomBar(bottomBar: EmojiBottomBar, didSelectAtIndex index: Int) {
         currentTabIndex = index
+    }
+    
+    func emojiBottomBarDidSelectSendButton(bottomBar: EmojiBottomBar) {
+        delegate?.emojiKeyboatdViewDidSelectSend(self)
     }
 }
 
