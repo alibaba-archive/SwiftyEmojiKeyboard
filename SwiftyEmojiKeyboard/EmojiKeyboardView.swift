@@ -81,11 +81,23 @@ public class EmojiKeyboardView: UIView {
 
     let cellIdentifer = "TBEmojiIdentifer"
     
+    var localizaStrings = [
+        "recent": "最近",
+        "default": "默认",
+        "send": "发送"
+    ]
+    
     public weak var delegate: EmojiKeyboardViewDelegate?
     
     var dataSource = [[[String: String]]]()
     
     static var bgColor: UIColor = UIColor(red: 231/255.0, green: 231/255.0, blue: 231/255.0, alpha: 1)
+    
+    public init(localizaStrings: [String: String]) {
+        self.localizaStrings = localizaStrings
+        super.init(frame: CGRect.zero)
+        commonInit()
+    }
     
     var currentTabIndex: Int = 1 {
         didSet {
@@ -129,7 +141,7 @@ public class EmojiKeyboardView: UIView {
     func commonInit() {
         self.backgroundColor = UIColor.redColor()
         self.frame = CGRect(x: 10, y: 10, width: 10, height: 216)
-        
+
         datasourceInit()
         collectionInit()
         pagecontrolInit()
@@ -167,7 +179,7 @@ public class EmojiKeyboardView: UIView {
     }
     
     func bottomBarInit() {
-        let bottomBar = EmojiBottomBar()
+        let bottomBar = EmojiBottomBar(localizaStrings: localizaStrings)
         bottomBar.delegate = self
         addSubview(bottomBar)
         addBottomBarConstraint(bottomBar)

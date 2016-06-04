@@ -18,16 +18,18 @@ protocol EmojiBottomBarDelegate: NSObjectProtocol {
 class EmojiBottomBar: UIView {
 
     weak var delegate: EmojiBottomBarDelegate?
-    let tabArray = ["最近", "默认"]
+    let tabArray = ["recent", "default"]
     var buttonArray = [UIButton]()
+    var localizaStrings = [String: String]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
     
-    init() {
+    init(localizaStrings: [String: String]) {
         super.init(frame: CGRect.zero)
+        self.localizaStrings = localizaStrings
         commonInit()
     }
     
@@ -37,16 +39,16 @@ class EmojiBottomBar: UIView {
     
     func commonInit() {
         self.backgroundColor = UIColor.whiteColor()
-        
         initButton()
     }
     
     func initButton() {
         
         buttonArray = tabArray.map { (tabTitle) -> UIButton in
+            let title = self.localizaStrings[tabTitle]
             let button = UIButton(frame: CGRect.zero)
-            button.titleLabel?.text = tabTitle
-            button.setTitle(tabTitle, forState: .Normal)
+            button.titleLabel?.text = title
+            button.setTitle(title, forState: .Normal)
             button.setTitleColor(UIColor.blackColor(), forState: .Normal)
             button.titleLabel?.font = UIFont.systemFontOfSize(13)
             button.addTarget(self, action: #selector(buttonTouchUpinside), forControlEvents: .TouchUpInside)
@@ -64,7 +66,7 @@ class EmojiBottomBar: UIView {
         
         let sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 35))
         sendButton.backgroundColor = UIColor.blueColor()
-        sendButton.setTitle("发送", forState: .Normal)
+        sendButton.setTitle(self.localizaStrings["send"], forState: .Normal)
         sendButton.titleLabel?.font = UIFont.systemFontOfSize(13)
         sendButton.backgroundColor = UIColor(red: 3/255.0, green: 169/255.0, blue: 244/255.0, alpha: 1)
         sendButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)

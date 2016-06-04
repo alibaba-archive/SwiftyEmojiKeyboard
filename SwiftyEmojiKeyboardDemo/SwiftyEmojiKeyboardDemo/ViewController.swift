@@ -12,15 +12,13 @@ import SwiftyEmojiKeyboard
 class ViewController: UIViewController {
     @IBOutlet weak var textfiled: UITextField!
 
-    
     lazy var emoji: EmojiKeyboardView = {
-        let emoji = EmojiKeyboardView()
+        let emoji = EmojiKeyboardView(localizaStrings: ["send":"Send","default":"Default","recent":"Recent"])
         return emoji
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
     }
 
     @IBAction func tapRagular(sender: AnyObject) {
@@ -43,8 +41,6 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 
 extension ViewController: EmojiKeyboardViewDelegate {
