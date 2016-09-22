@@ -10,9 +10,9 @@ import UIKit
 
 protocol EmojiBottomBarDelegate: NSObjectProtocol {
     
-    func emojiBottomBar(bottomBar: EmojiBottomBar, didSelectAtIndex index: Int)
+    func emojiBottomBar(_ bottomBar: EmojiBottomBar, didSelectAtIndex index: Int)
     
-    func emojiBottomBarDidSelectSendButton(bottomBar: EmojiBottomBar)
+    func emojiBottomBarDidSelectSendButton(_ bottomBar: EmojiBottomBar)
 }
 
 class EmojiBottomBar: UIView {
@@ -38,21 +38,20 @@ class EmojiBottomBar: UIView {
     }
     
     func commonInit() {
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.white
         initButton()
     }
     
     func initButton() {
-        
         buttonArray = tabArray.map { (tabTitle) -> UIButton in
             let title = self.localizaStrings[tabTitle]
             let button = UIButton(frame: CGRect.zero)
             button.titleLabel?.text = title
-            button.setTitle(title, forState: .Normal)
-            button.setTitleColor(UIColor.blackColor(), forState: .Normal)
-            button.titleLabel?.font = UIFont.systemFontOfSize(13)
-            button.addTarget(self, action: #selector(buttonTouchUpinside), forControlEvents: .TouchUpInside)
-            button.setBackgroundImage(EmojiKeyboardView.bgColor.colorToImage(), forState: .Selected)
+            button.setTitle(title, for: UIControlState())
+            button.setTitleColor(UIColor.black, for: UIControlState())
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+            button.addTarget(self, action: #selector(buttonTouchUpinside), for: .touchUpInside)
+            button.setBackgroundImage(EmojiKeyboardView.bgColor.colorToImage(), for: .selected)
             return button
         }
         
@@ -62,34 +61,34 @@ class EmojiBottomBar: UIView {
             button.tag = 8888 + i
             addSubview(button)
         }
-        buttonArray[1].selected = true
+        buttonArray[1].isSelected = true
         
         let sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 35))
-        sendButton.backgroundColor = UIColor.blueColor()
-        sendButton.setTitle(self.localizaStrings["send"], forState: .Normal)
-        sendButton.titleLabel?.font = UIFont.systemFontOfSize(13)
+        sendButton.backgroundColor = UIColor.blue
+        sendButton.setTitle(self.localizaStrings["send"], for: UIControlState())
+        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         sendButton.backgroundColor = UIColor(red: 3/255.0, green: 169/255.0, blue: 244/255.0, alpha: 1)
-        sendButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        sendButton.setTitleColor(UIColor.white, for: UIControlState())
         addSubview(sendButton)
-        sendButton.addTarget(self, action: #selector(sendButtonTouchUpinside), forControlEvents: .TouchUpInside)
+        sendButton.addTarget(self, action: #selector(sendButtonTouchUpinside), for: .touchUpInside)
         addbuttonContraint(sendButton)
     }
     
-    func addbuttonContraint(button: UIButton) {
+    func addbuttonContraint(_ button: UIButton) {
         button.translatesAutoresizingMaskIntoConstraints = false
-        let rightConstraint = NSLayoutConstraint(item: button, attribute: .Right, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1, constant: 0)
-        let topConstraint = NSLayoutConstraint(item: button, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1, constant: 0)
-        let bottomConstraint = NSLayoutConstraint(item: button, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1, constant: 0)
-        let heightConstraint = NSLayoutConstraint(item: button, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 35)
-        let widthConstraint = NSLayoutConstraint(item: button, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 60)
+        let rightConstraint = NSLayoutConstraint(item: button, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0)
+        let topConstraint = NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0)
+        let bottomConstraint = NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0)
+        let heightConstraint = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 35)
+        let widthConstraint = NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 60)
         
         self.addConstraints([rightConstraint, bottomConstraint, topConstraint])
         button.addConstraints([heightConstraint, widthConstraint])
     }
     
-    func buttonTouchUpinside(sender: UIButton) {
-        buttonArray.forEach { $0.selected = false }
-        sender.selected = true
+    func buttonTouchUpinside(_ sender: UIButton) {
+        buttonArray.forEach { $0.isSelected = false }
+        sender.isSelected = true
         if let delegate = delegate {
             delegate.emojiBottomBar(self, didSelectAtIndex: sender.tag - 8888)
         }
@@ -105,14 +104,14 @@ class EmojiBottomBar: UIView {
 extension UIColor {
     
     func colorToImage() -> UIImage {
-        let rect = CGRectMake(0, 0, 1, 1)
+        let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
-        CGContextSetFillColorWithColor(context, self.CGColor)
-        CGContextFillRect(context, rect)
+        context?.setFillColor(self.cgColor)
+        context?.fill(rect)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return image
+        return image!
     }
 }
 

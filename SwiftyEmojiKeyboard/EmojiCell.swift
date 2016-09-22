@@ -16,16 +16,16 @@ class EmojiCell: UICollectionViewCell {
         return imageView
     }()
     
-    func configWithEmoji(emoji: [String: String]) {
+    func configWithEmoji(_ emoji: [String: String]) {
         let png = emoji["png"]
-        let seps = png?.componentsSeparatedByString(".")
-        imageView.image = UIImage(named: seps![0], inBundle: NSBundle(forClass: EmojiCell.self), compatibleWithTraitCollection: nil)
+        let seps = png?.components(separatedBy: ".")
+        imageView.image = UIImage(named: seps![0], in: Bundle(for: EmojiCell.self), compatibleWith: nil)
         contentView.addSubview(imageView)
         imageView.center = contentView.center
     }
     
     func configWithDelete() {
-        imageView.image = UIImage(named: "emoji_delete", inBundle: NSBundle(forClass: EmojiCell.self), compatibleWithTraitCollection: nil)
+        imageView.image = UIImage(named: "emoji_delete", in: Bundle(for: EmojiCell.self), compatibleWith: nil)
         contentView.addSubview(imageView)
         imageView.center = contentView.center
     }

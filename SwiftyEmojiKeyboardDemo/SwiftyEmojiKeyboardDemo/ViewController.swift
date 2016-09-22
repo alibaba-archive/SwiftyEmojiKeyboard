@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    @IBAction func tapRagular(sender: AnyObject) {
+    @IBAction func tapRagular(sender: Any) {
         
         textfiled.resignFirstResponder()
         textfiled.switchToDefaultKeyboard()
@@ -29,7 +29,7 @@ class ViewController: UIViewController {
     }
     
     @IBOutlet weak var regular: UIButton!
-    @IBAction func ddd(sender: AnyObject) {
+    @IBAction func emojiButtonPressed(sender: Any) {
         
         emoji.delegate = self
         
@@ -50,7 +50,7 @@ extension ViewController: EmojiKeyboardViewDelegate {
     }
     
     func emojiKeyboardView(emojiView: EmojiKeyboardView, didSelectEmoji emoji: String) {
-        textfiled.text = textfiled.text?.stringByAppendingString(emoji)
+        textfiled.text = textfiled.text?.appending(emoji)
     }
     
     func emojiKeyboatdViewDidSelectSend(emojiView: EmojiKeyboardView) {
