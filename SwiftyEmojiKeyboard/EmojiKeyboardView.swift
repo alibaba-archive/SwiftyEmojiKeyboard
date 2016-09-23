@@ -190,7 +190,7 @@ extension EmojiKeyboardView {
     
     func caculateNumberofSectionForTab(_ tab: Int) -> Int {
         if dataSource[currentTabIndex].count % LayoutManager.pageCount == 0 {
-            dataSource[currentTabIndex].count / LayoutManager.pageCount
+            return dataSource[currentTabIndex].count / LayoutManager.pageCount
         }
         return dataSource[currentTabIndex].count / LayoutManager.pageCount + 1
     }
