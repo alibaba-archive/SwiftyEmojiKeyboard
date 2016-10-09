@@ -139,7 +139,6 @@ open class EmojiKeyboardView: UIView {
     }
     
     func commonInit() {
-        self.backgroundColor = UIColor.red
         self.frame = CGRect(x: 10, y: 10, width: 10, height: 216)
 
         datasourceInit()
