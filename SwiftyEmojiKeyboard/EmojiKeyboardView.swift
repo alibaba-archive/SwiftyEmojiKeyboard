@@ -203,13 +203,13 @@ extension EmojiKeyboardView {
         if startIndex + pageSize < dataSource[currentTabIndex].count {
             return Array(dataSource[self.currentTabIndex][startIndex..<startIndex + pageSize])
         } else {
-            return Array(dataSource[self.currentTabIndex][startIndex..<dataSource[currentTabIndex].count - 1])
+            return Array(dataSource[self.currentTabIndex][startIndex..<dataSource[currentTabIndex].count])
         }
     }
     
     func coverntIndexpathToIndex(_ indexPath: IndexPath) -> Int {
-        let row = (indexPath as NSIndexPath).row % 3 + 1
-        let col = (indexPath as NSIndexPath).row / 3 + 1
+        let row = indexPath.row % 3 + 1
+        let col = indexPath.row / 3 + 1
         return (row - 1) * LayoutManager.maxRowCount + col - 1
     }
 }
@@ -223,10 +223,13 @@ extension EmojiKeyboardView: UICollectionViewDelegate, UICollectionViewDataSourc
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return (LayoutManager.maxRowCount * 3)
     }
-    
+
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: EmojiCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifer, for: indexPath) as! EmojiCell
-        let sections = dataSourceForPage((indexPath as NSIndexPath).section)
+        if indexPath.section == 4 {
+            print("the last section")
+        }
+        let sections = dataSourceForPage(indexPath.section)
         let index = coverntIndexpathToIndex(indexPath)
         if index < sections.count {
             cell.configWithEmoji(sections[index])
@@ -239,7 +242,7 @@ extension EmojiKeyboardView: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let sections = dataSourceForPage((indexPath as NSIndexPath).section)
+        let sections = dataSourceForPage(indexPath.section)
         let index = coverntIndexpathToIndex(indexPath)
         if index < sections.count {
             RecentManager.instance.insert(sections[index])
