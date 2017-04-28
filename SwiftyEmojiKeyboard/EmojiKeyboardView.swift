@@ -11,13 +11,13 @@ import UIKit
 public class EmojiKeyboardView: UIView {
     public weak var delegate: EmojiKeyboardViewDelegate?
     
-    var dataSource = [[[String: String]]]()
-    
     let localizaStrings: [String: String]
     let bgColor: UIColor
     let currentPageIndicatorTintColor: UIColor
     let pageIndicatorTintColor: UIColor
     
+    var dataSource: [[[String: String]]] = [[[:]]]
+
     public init(localizaStrings: [String: String] = ["recent": "最近", "default": "默认", "send": "发送"],
                 bgColor: UIColor = UIColor(red: 231/255.0, green: 231/255.0, blue: 231/255.0, alpha: 1),
                 currentPageIndicatorTintColor: UIColor = UIColor.white,
