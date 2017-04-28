@@ -15,17 +15,20 @@ public class EmojiKeyboardView: UIView {
     let bgColor: UIColor
     let currentPageIndicatorTintColor: UIColor
     let pageIndicatorTintColor: UIColor
+    let bottomBarHeight: CGFloat
     
     var dataSource: [[[String: String]]] = [[[:]]]
 
     public init(localizaStrings: [String: String] = ["recent": "最近", "default": "默认", "send": "发送"],
                 bgColor: UIColor = UIColor(red: 231/255.0, green: 231/255.0, blue: 231/255.0, alpha: 1),
                 currentPageIndicatorTintColor: UIColor = UIColor.white,
-                pageIndicatorTintColor: UIColor = UIColor.white.withAlphaComponent(0.2)) {
+                pageIndicatorTintColor: UIColor = UIColor.white.withAlphaComponent(0.2),
+                bottomBarHeight: CGFloat = 35) {
         self.localizaStrings = localizaStrings
         self.bgColor = bgColor
         self.currentPageIndicatorTintColor = currentPageIndicatorTintColor
         self.pageIndicatorTintColor = pageIndicatorTintColor
+        self.bottomBarHeight = bottomBarHeight
         super.init(frame: CGRect(x: 10, y: 10, width: 10, height: 216))
         commonInit()
     }
@@ -212,7 +215,7 @@ extension EmojiKeyboardView {
         let leftConstraint = NSLayoutConstraint(item: bottomBar, attribute: .left, relatedBy: .equal, toItem: self, attribute: .left, multiplier: 1, constant: 0)
         let bottomConstraint = NSLayoutConstraint(item: bottomBar, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0)
         let rightConstraint = NSLayoutConstraint(item: bottomBar, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0)
-        let heightConstraint = NSLayoutConstraint(item: bottomBar, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 35)
+        let heightConstraint = NSLayoutConstraint(item: bottomBar, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: bottomBarHeight)
         
         self.addConstraints([leftConstraint, rightConstraint, bottomConstraint])
         bottomBar.addConstraint(heightConstraint)
