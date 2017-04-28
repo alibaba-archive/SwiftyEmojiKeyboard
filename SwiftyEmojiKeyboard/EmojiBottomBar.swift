@@ -16,20 +16,19 @@ protocol EmojiBottomBarDelegate: NSObjectProtocol {
 }
 
 class EmojiBottomBar: UIView {
-
     weak var delegate: EmojiBottomBarDelegate?
-    let tabArray = ["recent", "default"]
-    var buttonArray = [UIButton]()
-    var localizaStrings = [String: String]()
+    weak var keyboardView: EmojiKeyboardView!
+
+    var buttons: [UIButton] = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
     
-    init(localizaStrings: [String: String]) {
+    init(keyboardView: EmojiKeyboardView) {
         super.init(frame: CGRect.zero)
-        self.localizaStrings = localizaStrings
+        self.keyboardView = keyboardView
         commonInit()
     }
     
@@ -43,29 +42,29 @@ class EmojiBottomBar: UIView {
     }
     
     func initButton() {
-        buttonArray = tabArray.map { (tabTitle) -> UIButton in
-            let title = self.localizaStrings[tabTitle]
+        buttons = ["recent", "default"].map { (tabTitle) -> UIButton in
+            let title = self.keyboardView.localizaStrings[tabTitle]
             let button = UIButton(frame: CGRect.zero)
             button.titleLabel?.text = title
             button.setTitle(title, for: UIControlState())
             button.setTitleColor(UIColor.black, for: UIControlState())
             button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
             button.addTarget(self, action: #selector(buttonTouchUpinside), for: .touchUpInside)
-            button.setBackgroundImage(EmojiKeyboardView.bgColor.colorToImage(), for: .selected)
+            button.setBackgroundImage(self.keyboardView.bgColor.colorToImage(), for: .selected)
             return button
         }
         
-        for i in 0..<buttonArray.count {
-            let button = buttonArray[i]
+        for i in 0..<buttons.count {
+            let button = buttons[i]
             button.frame = CGRect(x: 80 * i, y: 0, width: 80, height: 35)
             button.tag = 8888 + i
             addSubview(button)
         }
-        buttonArray[1].isSelected = true
+        buttons[1].isSelected = true
         
         let sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 35))
         sendButton.backgroundColor = UIColor.blue
-        sendButton.setTitle(self.localizaStrings["send"], for: UIControlState())
+        sendButton.setTitle(self.keyboardView.localizaStrings["send"], for: UIControlState())
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         sendButton.backgroundColor = UIColor(red: 3/255.0, green: 169/255.0, blue: 244/255.0, alpha: 1)
         sendButton.setTitleColor(UIColor.white, for: UIControlState())
@@ -87,7 +86,7 @@ class EmojiBottomBar: UIView {
     }
     
     func buttonTouchUpinside(_ sender: UIButton) {
-        buttonArray.forEach { $0.isSelected = false }
+        buttons.forEach { $0.isSelected = false }
         sender.isSelected = true
         if let delegate = delegate {
             delegate.emojiBottomBar(self, didSelectAtIndex: sender.tag - 8888)
@@ -100,18 +99,3 @@ class EmojiBottomBar: UIView {
         }
     }
 }
-
-extension UIColor {
-    
-    func colorToImage() -> UIImage {
-        let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
-        UIGraphicsBeginImageContext(rect.size)
-        let context = UIGraphicsGetCurrentContext()
-        context?.setFillColor(self.cgColor)
-        context?.fill(rect)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image!
-    }
-}
-

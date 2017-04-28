@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		72D73DED1EB2EB090067229E /* UIColor+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D73DEC1EB2EB090067229E /* UIColor+Image.swift */; };
+		72D73DEF1EB3255D0067229E /* EmojiKeyboardViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D73DEE1EB3255D0067229E /* EmojiKeyboardViewDelegate.swift */; };
+		72D73DF11EB325850067229E /* EmojiCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D73DF01EB325850067229E /* EmojiCollectionViewLayout.swift */; };
+		72D73DF31EB325AF0067229E /* UITextField+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D73DF21EB325AF0067229E /* UITextField+Emoji.swift */; };
+		72D73DF51EB325BF0067229E /* UITextView+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D73DF41EB325BF0067229E /* UITextView+Emoji.swift */; };
 		E52CCDB61CD8B7E000293F15 /* emoji_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E52CCDB41CD8B7E000293F15 /* emoji_delete@2x.png */; };
 		E52CCDB71CD8B7E000293F15 /* emoji_delete@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E52CCDB51CD8B7E000293F15 /* emoji_delete@3x.png */; };
 		E546B5C61CD9CDB800B6C81B /* EmojiRecent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E546B5C51CD9CDB800B6C81B /* EmojiRecent.swift */; };
@@ -240,6 +245,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		72D73DEC1EB2EB090067229E /* UIColor+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Image.swift"; sourceTree = "<group>"; };
+		72D73DEE1EB3255D0067229E /* EmojiKeyboardViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiKeyboardViewDelegate.swift; sourceTree = "<group>"; };
+		72D73DF01EB325850067229E /* EmojiCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewLayout.swift; sourceTree = "<group>"; };
+		72D73DF21EB325AF0067229E /* UITextField+Emoji.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Emoji.swift"; sourceTree = "<group>"; };
+		72D73DF41EB325BF0067229E /* UITextView+Emoji.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+Emoji.swift"; sourceTree = "<group>"; };
 		E52CCDB41CD8B7E000293F15 /* emoji_delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emoji_delete@2x.png"; sourceTree = "<group>"; };
 		E52CCDB51CD8B7E000293F15 /* emoji_delete@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "emoji_delete@3x.png"; sourceTree = "<group>"; };
 		E546B5C51CD9CDB800B6C81B /* EmojiRecent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiRecent.swift; sourceTree = "<group>"; };
@@ -512,6 +522,11 @@
 				E59759941CD323F7001F2AC5 /* EmojiBottomBar.swift */,
 				E59759A81CD84E69001F2AC5 /* EmojiCell.swift */,
 				E546B5C51CD9CDB800B6C81B /* EmojiRecent.swift */,
+				72D73DEC1EB2EB090067229E /* UIColor+Image.swift */,
+				72D73DF01EB325850067229E /* EmojiCollectionViewLayout.swift */,
+				72D73DEE1EB3255D0067229E /* EmojiKeyboardViewDelegate.swift */,
+				72D73DF21EB325AF0067229E /* UITextField+Emoji.swift */,
+				72D73DF41EB325BF0067229E /* UITextView+Emoji.swift */,
 			);
 			path = SwiftyEmojiKeyboard;
 			sourceTree = "<group>";
@@ -1078,10 +1093,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72D73DF31EB325AF0067229E /* UITextField+Emoji.swift in Sources */,
 				E59759911CD20210001F2AC5 /* EmojiKeyboardView.swift in Sources */,
+				72D73DEF1EB3255D0067229E /* EmojiKeyboardViewDelegate.swift in Sources */,
 				E546B5C61CD9CDB800B6C81B /* EmojiRecent.swift in Sources */,
 				E59759951CD323F7001F2AC5 /* EmojiBottomBar.swift in Sources */,
+				72D73DF11EB325850067229E /* EmojiCollectionViewLayout.swift in Sources */,
+				72D73DF51EB325BF0067229E /* UITextView+Emoji.swift in Sources */,
 				E59759A91CD84E69001F2AC5 /* EmojiCell.swift in Sources */,
+				72D73DED1EB2EB090067229E /* UIColor+Image.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

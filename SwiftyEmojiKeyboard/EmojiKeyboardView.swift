@@ -8,95 +8,34 @@
 
 import UIKit
 
-
-class LayoutManager {
-    
-    static var width: Int = 45
-    static var pageCount: Int {
-        get {
-           return maxRowCount * 3 - 1
-        }
-    }
-    
-    static var maxRowCount: Int {
-        get {
-            let width: Int = Int(UIScreen.main.bounds.size.width)
-            return width / 45
-        }
-    }
-}
-
-class EmojiCollectionViewLayout: UICollectionViewFlowLayout {
-    
-    override func prepare() {
-        scrollDirection = .horizontal
-        minimumLineSpacing = 0
-        minimumInteritemSpacing = 0
-        
-        let width: Int = Int(UIScreen.main.bounds.size.width)
-        itemSize = CGSize(width: LayoutManager.width, height: 40)
-        let count: Int = width / LayoutManager.width
-
-        let offset = (width - LayoutManager.width * count) / 2
-        
-        sectionInset = UIEdgeInsetsMake(15, CGFloat(offset), 5, CGFloat(offset))
-    }
-}
-
-public extension UITextField {
-    
-    func switchToEmojiKeyboard(_ keyboard: EmojiKeyboardView) {
-        self.inputView = keyboard
-        self.reloadInputViews()
-    }
-    
-    func switchToDefaultKeyboard() {
-        self.inputView = nil
-        self.reloadInputViews()
-    }
-}
-
-public extension UITextView {
-    
-}
-
-public protocol EmojiKeyboardViewDelegate: NSObjectProtocol {
-    
-    func emojiKeyboardView(_ emojiView: EmojiKeyboardView, didSelectEmoji emoji: String)
-    
-    func emojiKeyboatdViewDidSelectDelete(_ emojiView: EmojiKeyboardView)
-    
-    func emojiKeyboatdViewDidSelectSend(_ emojiView: EmojiKeyboardView)
-}
-
-public extension EmojiKeyboardViewDelegate {
-    func emojiKeyboardView(_ emojiView: EmojiKeyboardView, didSelectEmoji emoji: String) { }
-    
-    func emojiKeyboatdViewDidSelectDelete(_ emojiView: EmojiKeyboardView) { }
-    
-    func emojiKeyboatdViewDidSelectSend(_ emojiView: EmojiKeyboardView) { }
-}
-
-open class EmojiKeyboardView: UIView {
-
-    let cellIdentifer = "TBEmojiIdentifer"
-    
-    var localizaStrings = [
-        "recent": "最近",
-        "default": "默认",
-        "send": "发送"
-    ]
-    
-    open weak var delegate: EmojiKeyboardViewDelegate?
+public class EmojiKeyboardView: UIView {
+    public weak var delegate: EmojiKeyboardViewDelegate?
     
     var dataSource = [[[String: String]]]()
     
-    static var bgColor: UIColor = UIColor(red: 231/255.0, green: 231/255.0, blue: 231/255.0, alpha: 1)
+    let localizaStrings: [String: String]
+    let bgColor: UIColor
+    let currentPageIndicatorTintColor: UIColor
+    let pageIndicatorTintColor: UIColor
     
-    public init(localizaStrings: [String: String]) {
+    public init(localizaStrings: [String: String] = ["recent": "最近", "default": "默认", "send": "发送"],
+                bgColor: UIColor = UIColor(red: 231/255.0, green: 231/255.0, blue: 231/255.0, alpha: 1),
+                currentPageIndicatorTintColor: UIColor = UIColor.white,
+                pageIndicatorTintColor: UIColor = UIColor.white.withAlphaComponent(0.2)) {
         self.localizaStrings = localizaStrings
-        super.init(frame: CGRect.zero)
+        self.bgColor = bgColor
+        self.currentPageIndicatorTintColor = currentPageIndicatorTintColor
+        self.pageIndicatorTintColor = pageIndicatorTintColor
+        super.init(frame: CGRect(x: 10, y: 10, width: 10, height: 216))
         commonInit()
+    }
+    
+    public convenience init() {
+        self.init()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     var currentTabIndex: Int = 1 {
@@ -115,32 +54,28 @@ open class EmojiKeyboardView: UIView {
     }
     
     lazy var collectionView: UICollectionView = {
-        
         let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: EmojiCollectionViewLayout())
         collection.isPagingEnabled = true
         collection.showsHorizontalScrollIndicator = false
-        collection.backgroundColor = EmojiKeyboardView.bgColor
+        collection.backgroundColor = self.bgColor
         return collection
     }()
     
     lazy var pagecontrol: UIPageControl = {
         let pagecontrol = UIPageControl()
-        pagecontrol.backgroundColor = EmojiKeyboardView.bgColor
+        pagecontrol.backgroundColor = self.bgColor
+        pagecontrol.currentPageIndicatorTintColor = self.currentPageIndicatorTintColor
+        pagecontrol.pageIndicatorTintColor = self.pageIndicatorTintColor
         return pagecontrol
     }()
     
-    public init() {
-        super.init(frame: CGRect.zero)
-        commonInit()
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    lazy var bottomBar: EmojiBottomBar = {
+        let bottomBar = EmojiBottomBar(keyboardView: self)
+        bottomBar.delegate = self
+        return bottomBar
+    }()
     
     func commonInit() {
-        self.frame = CGRect(x: 10, y: 10, width: 10, height: 216)
-
         datasourceInit()
         collectionInit()
         pagecontrolInit()
@@ -155,7 +90,7 @@ open class EmojiKeyboardView: UIView {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        collectionView.register(EmojiCell.self, forCellWithReuseIdentifier: cellIdentifer)
+        collectionView.register(EmojiCell.self, forCellWithReuseIdentifier: EmojiCell.cellIdentifer)
         addSubview(collectionView)
         addCollectionViewConstraint(collectionView)
     }
@@ -178,15 +113,12 @@ open class EmojiKeyboardView: UIView {
     }
     
     func bottomBarInit() {
-        let bottomBar = EmojiBottomBar(localizaStrings: localizaStrings)
-        bottomBar.delegate = self
         addSubview(bottomBar)
         addBottomBarConstraint(bottomBar)
     }
 }
 
 extension EmojiKeyboardView {
-    
     func caculateNumberofSectionForTab(_ tab: Int) -> Int {
         if dataSource[currentTabIndex].count % LayoutManager.pageCount == 0 {
             return dataSource[currentTabIndex].count / LayoutManager.pageCount
@@ -215,7 +147,6 @@ extension EmojiKeyboardView {
 }
 
 extension EmojiKeyboardView: UICollectionViewDelegate, UICollectionViewDataSource {
-    
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
         return caculateNumberofSectionForTab(currentTabIndex)
     }
@@ -225,7 +156,7 @@ extension EmojiKeyboardView: UICollectionViewDelegate, UICollectionViewDataSourc
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: EmojiCell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifer, for: indexPath) as! EmojiCell
+        let cell: EmojiCell = collectionView.dequeueReusableCell(withReuseIdentifier: EmojiCell.cellIdentifer, for: indexPath) as! EmojiCell
         if indexPath.section == 4 {
             print("the last section")
         }
