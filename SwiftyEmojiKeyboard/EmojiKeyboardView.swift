@@ -19,6 +19,32 @@ public class EmojiKeyboardView: UIView {
     
     var dataSource: [[[String: String]]] = [[[:]]]
 
+    lazy var collectionView: UICollectionView = {
+        let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: EmojiCollectionViewLayout())
+        collection.isPagingEnabled = true
+        collection.showsHorizontalScrollIndicator = false
+        collection.backgroundColor = self.bgColor
+        return collection
+    }()
+
+    lazy var pagecontrol: UIPageControl = {
+        let pagecontrol = UIPageControl()
+        pagecontrol.backgroundColor = self.bgColor
+        pagecontrol.currentPageIndicatorTintColor = self.currentPageIndicatorTintColor
+        pagecontrol.pageIndicatorTintColor = self.pageIndicatorTintColor
+        return pagecontrol
+    }()
+
+    lazy var bottomBar: EmojiBottomBar = {
+        let bottomBar = EmojiBottomBar(keyboardView: self)
+        bottomBar.delegate = self
+        return bottomBar
+    }()
+
+    public var sendButton: UIButton {
+        return bottomBar.sendButton
+    }
+
     public init(localizaStrings: [String: String] = ["recent": "最近", "default": "默认", "send": "发送"],
                 bgColor: UIColor = UIColor(red: 231/255.0, green: 231/255.0, blue: 231/255.0, alpha: 1),
                 currentPageIndicatorTintColor: UIColor = UIColor.white,
@@ -55,28 +81,6 @@ public class EmojiKeyboardView: UIView {
         collectionView.reloadData()
         configPageControl()
     }
-    
-    lazy var collectionView: UICollectionView = {
-        let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: EmojiCollectionViewLayout())
-        collection.isPagingEnabled = true
-        collection.showsHorizontalScrollIndicator = false
-        collection.backgroundColor = self.bgColor
-        return collection
-    }()
-    
-    lazy var pagecontrol: UIPageControl = {
-        let pagecontrol = UIPageControl()
-        pagecontrol.backgroundColor = self.bgColor
-        pagecontrol.currentPageIndicatorTintColor = self.currentPageIndicatorTintColor
-        pagecontrol.pageIndicatorTintColor = self.pageIndicatorTintColor
-        return pagecontrol
-    }()
-    
-    lazy var bottomBar: EmojiBottomBar = {
-        let bottomBar = EmojiBottomBar(keyboardView: self)
-        bottomBar.delegate = self
-        return bottomBar
-    }()
     
     func commonInit() {
         datasourceInit()

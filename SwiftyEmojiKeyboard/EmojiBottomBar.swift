@@ -20,7 +20,8 @@ class EmojiBottomBar: UIView {
     weak var keyboardView: EmojiKeyboardView!
 
     var buttons: [UIButton] = []
-    
+    let sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 35))
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -62,7 +63,6 @@ class EmojiBottomBar: UIView {
         }
         buttons[1].isSelected = true
         
-        let sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 35))
         sendButton.backgroundColor = UIColor.blue
         sendButton.setTitle(self.keyboardView.localizaStrings["send"], for: UIControlState())
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
