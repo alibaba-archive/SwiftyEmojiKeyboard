@@ -16,6 +16,7 @@ public class EmojiKeyboardView: UIView {
     let currentPageIndicatorTintColor: UIColor
     let pageIndicatorTintColor: UIColor
     let bottomBarHeight: CGFloat
+    let bottomBarTitleAttributes: [String: Any]
     
     var dataSource: [[[String: String]]] = [[[:]]]
 
@@ -49,12 +50,15 @@ public class EmojiKeyboardView: UIView {
                 bgColor: UIColor = UIColor(red: 231/255.0, green: 231/255.0, blue: 231/255.0, alpha: 1),
                 currentPageIndicatorTintColor: UIColor = UIColor.white,
                 pageIndicatorTintColor: UIColor = UIColor.white.withAlphaComponent(0.2),
-                bottomBarHeight: CGFloat = 35) {
+                bottomBarHeight: CGFloat = 35,
+                bottomBarTitleAttributes: [String: Any] = [NSForegroundColorAttributeName: UIColor.black,
+                                                           NSFontAttributeName: UIFont.systemFont(ofSize: 13)]) {
         self.localizaStrings = localizaStrings
         self.bgColor = bgColor
         self.currentPageIndicatorTintColor = currentPageIndicatorTintColor
         self.pageIndicatorTintColor = pageIndicatorTintColor
         self.bottomBarHeight = bottomBarHeight
+        self.bottomBarTitleAttributes = bottomBarTitleAttributes
         super.init(frame: CGRect(x: 10, y: 10, width: 10, height: 216))
         commonInit()
     }

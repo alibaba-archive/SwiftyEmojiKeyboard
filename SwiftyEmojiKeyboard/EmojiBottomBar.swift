@@ -20,7 +20,7 @@ class EmojiBottomBar: UIView {
     weak var keyboardView: EmojiKeyboardView!
 
     var buttons: [UIButton] = []
-    let sendButton = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 35))
+    let sendButton: UIButton = UIButton()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,6 +48,11 @@ class EmojiBottomBar: UIView {
             let button = UIButton(frame: CGRect.zero)
             button.titleLabel?.text = title
             button.setTitle(title, for: UIControlState())
+
+            let attributedString = NSMutableAttributedString(string: title ?? "")
+            attributedString.addAttributes(self.keyboardView.bottomBarTitleAttributes, range: NSRange(location: 0, length: title?.characters.count ?? 0))
+            sendButton.setAttributedTitle(attributedString, for: UIControlState())
+
             button.setTitleColor(UIColor.black, for: UIControlState())
             button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
             button.addTarget(self, action: #selector(buttonTouchUpinside), for: .touchUpInside)
@@ -57,12 +62,13 @@ class EmojiBottomBar: UIView {
         
         for i in 0..<buttons.count {
             let button = buttons[i]
-            button.frame = CGRect(x: 80 * i, y: 0, width: 80, height: 35)
+            button.frame = CGRect(x: 80 * i, y: 0, width: 80, height: Int(self.keyboardView.bottomBarHeight))
             button.tag = 8888 + i
             addSubview(button)
         }
         buttons[1].isSelected = true
         
+        sendButton.frame = CGRect(x: 0, y: 0, width: 80, height: self.keyboardView.bottomBarHeight)
         sendButton.backgroundColor = UIColor.blue
         sendButton.setTitle(self.keyboardView.localizaStrings["send"], for: UIControlState())
         sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 13)
@@ -78,7 +84,7 @@ class EmojiBottomBar: UIView {
         let rightConstraint = NSLayoutConstraint(item: button, attribute: .right, relatedBy: .equal, toItem: self, attribute: .right, multiplier: 1, constant: 0)
         let topConstraint = NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0)
         let bottomConstraint = NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0)
-        let heightConstraint = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 35)
+        let heightConstraint = NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.keyboardView.bottomBarHeight)
         let widthConstraint = NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 60)
         
         self.addConstraints([rightConstraint, bottomConstraint, topConstraint])
